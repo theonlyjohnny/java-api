@@ -1,0 +1,56 @@
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '1.2.4'
+}
+
+apply plugin: 'application'
+apply plugin: 'java-library'
+
+mainClassName = "com.johnny.App"
+group = 'com.johnny'
+
+repositories {
+    mavenCentral()
+}
+
+run {
+    args = ["server", "config.yml"]
+}
+dependencies {
+
+    api 'org.apache.commons:commons-math3:3.6.1'
+
+    implementation 'com.google.guava:guava:20.0'
+
+    compile 'io.dropwizard:dropwizard-core:0.8.0'
+
+    testImplementation 'junit:junit:4.12'
+}
+
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                    'Implementation-Version': project.version)
+    }
+}
+
+shadowJar {
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+    manifest {
+        attributes 'Implementation-Title': rootProject.name
+        attributes 'Implementation-Version': rootProject.version
+        attributes 'Implementation-Vendor-Id': rootProject.group
+        attributes 'Build-Time': ZonedDateTime.now(ZoneId.of("UTC"))
+                .format(DateTimeFormatter.ISO_ZONED_DATE_TIME)
+        attributes 'Built-By': InetAddress.localHost.hostName
+        attributes 'Created-By': 'Gradle ' + gradle.gradleVersion
+        attributes 'Main-Class': mainClassName
+    }
+    archiveName 'java-api.jar'
+}

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: java-api
+Implementation-Version: unspecified
+Built-By: Johnnys-MacBook-Pro-2.local
+Implementation-Vendor-Id: com.johnny
+Build-Time: 2017-11-18T10:00:07.123Z[UTC]
+Created-By: Gradle 3.4.1
+Main-Class: com.johnny.App
+
